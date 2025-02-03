@@ -5,7 +5,9 @@ Este proyecto es una API RESTful para manejar un sistema de productos, carritos 
 ## Características Principales
 
 - **CRUD de Productos:** Gestiona productos con rutas para listar, crear, actualizar y eliminar.
-- **Manejo de Carritos:** Rutas para agregar productos al carrito y consultar su contenido.
+- **Manejo de Carritos:**
+  - Rutas para agregar productos al carrito y consultar su contenido.
+  - Ruta para finalizar la compra de un carrito (`/api/carts/:cid/purchase`), verificando stock y generando un ticket de compra.
 - **Autenticación de Usuarios:**
   - Registro y login de usuarios.
   - Contraseñas encriptadas con **bcrypt**.
@@ -69,17 +71,21 @@ Este proyecto es una API RESTful para manejar un sistema de productos, carritos 
 ```
 ├── src/
    ├── controllers/
-   │   └── sessionController.js
+   │   ├── sessionController.js
+   │   ├── productController.js
+   │   ├── cartController.js
    ├── middlewares/
-   │   └── auth.js
+   │   ├── auth.js
+   │   ├── passportAuth.js
    ├── models/
    │   ├── User.js
    │   ├── Product.js
-   │   └── Cart.js
+   │   ├── Cart.js
+   │   ├── Ticket.js
    ├── routes/
    │   ├── productRoutes.js
    │   ├── cartRoutes.js
-   │   └── sessions.js
+   │   ├── sessionRoutes.js
    ├── utils/
    │   └── password.js
    ├── config/
@@ -101,21 +107,16 @@ Este proyecto es una API RESTful para manejar un sistema de productos, carritos 
 - **POST** `/`: Crea un nuevo carrito.
 - **GET** `/:id`: Obtiene los productos de un carrito.
 - **POST** `/:id/product/:productId`: Agrega un producto al carrito.
+- **POST** `/:id/purchase`: Finaliza la compra del carrito, verificando stock y generando un ticket de compra.
 
 ### Usuarios (`/api/sessions`)
 
 - **POST** `/login`: Inicia sesión y devuelve un JWT.
 - **GET** `/current`: Devuelve los datos del usuario autenticado (requiere autenticación).
 
-## Próximas Mejoras
 
-- Implementar pruebas automatizadas.
-- Mejorar la interfaz visual con React o Vue.js.
-- Agregar roles de administrador para gestionar productos y usuarios.
 
 ## Contribuciones
 
 Si deseas contribuir, por favor, abre un issue o envía un pull request.
-
-
 
