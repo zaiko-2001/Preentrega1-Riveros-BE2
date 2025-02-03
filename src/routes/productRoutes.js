@@ -1,10 +1,16 @@
-import express from 'express'; 
-const router = express.Router(); 
-import * as productController from '../controllers/productController.js';
+import express from 'express';
+import { authorize } from '../middlewares/authMiddleware.js';
+import { getProducts, createProduct, updateProduct, deleteProduct } from '../controllers/productController.js';
+import { passportAuth } from '../middlewares/passportAuth.js';
 
+const router = express.Router();
 
-// Rutas para productos
-router.get('/', productController.getProducts);
-router.get('/:id', productController.getProductById);
+// Obtener productos (público)
+router.get('/', getProducts);
+
+// Crear, actualizar y eliminar (solo admins)
+router.post('/', passportAuth, authorize(['admin']), createProduct);
+router.put('/:id', passportAuth, authorize(['admin']), updateProduct);
+router.delete('/:id', passportAuth, authorize(['admin']), deleteProduct);
 
 export default router;
